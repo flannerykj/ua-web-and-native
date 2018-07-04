@@ -8,7 +8,12 @@ export function getPosts() {
   return (function(dispatch){
     dispatch ({type: 'GET_POSTS_REQUEST'});
     postService.get()
-    .then((posts) => dispatch({type: 'GET_POSTS_SUCCESS', posts }))
+    .then((response) => {
+      if (response.data) {
+        dispatch({type: 'GET_POSTS_SUCCESS', ...response})
+      } else {
+        dispatch ({type: 'GET_POSTS_ERROR', response})
+      }})
     .catch((error) => dispatch ({type: 'GET_POSTS_ERROR', error}));
   });
 }

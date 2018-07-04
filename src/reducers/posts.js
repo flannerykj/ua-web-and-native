@@ -14,7 +14,7 @@ const worksReducer = (state: PostsContainer = initialStore.posts, action) => {
       };
     case 'GET_POSTS_SUCCESS':
 			return {
-        data: action.posts,
+        data: action.data,
         page: action.page,
         pageSize: action.pageSize,
         total: action.total,
