@@ -1,27 +1,92 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import type { PostsContainer } from '../../types/post-types';
-import PostList from '../shared/PostList';
+import { Button, Checkbox, Form, Message } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
-import { postsContainer } from '../../containers/PostsContainer';
+import { authContainer } from '../../containers/AuthContainer';
+import LoginForm from '../../types/login-form';
 
-class PostIndexPage extends Component<PostsContainer> {
+class LoginPage extends Component<PostsContainer> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      form: new LoginForm()
+    }
+  }
   componentWillMount() {
-    if (this.props.posts.shouldUpdate) {
-      this.props.getPosts();
+    if (this.props.auth.token) {
+      this.props.history.push('/');
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.posts.shouldUpdate) {
-      this.props.getPosts();
+    if (nextProps.auth.token) {
+      this.props.history.push('/');
     }
   }
+  onFormSubmit = () => {
+    this.state.form.validate();
+    this.setState({
+      form: this.state.form
+    });
+    if (this.state.form.hasErrors) {
+      return;
+    }
+  }
+  onFieldChange = (field, value) => {
+    const form = this.state.form;
+    form.updateValues({
+      [field]: value
+    });
+    this.setState({
+      form
+    });
+  }
   render () {
+    const { errors } = this.state.form;
     return (
-      <PostList posts={this.props.posts.data} />
+      <div>
+        <h1>Log In</h1>
+        <Form
+          onSubmit={this.onFormSubmit}
+          error={Object.keys(this.state.form.errors).length > 0}
+        >
+          <Form.Field
+            error={!!(errors.email)}
+          >
+            <Form.Input
+              label='Email'
+              placeholder='Email'
+              value={this.state.form.email}
+              onChange={(e) => this.onFieldChange('email', e.target.value)}
+              error={!!(errors.email)}
+            />
+          </Form.Field>
+
+          <Form.Field error={!!(errors.password)}>
+             <Form.Input
+              label='Password'
+              placeholder='Password'
+              value={this.state.form.password}
+              onChange={(e) => this.onFieldChange('password', e.target.value)}
+            />
+          </Form.Field>
+          {Object.keys(this.state.form.errors).length > 0 && (
+            <Message
+              error
+            >
+              <ul>
+                <h4>Errors</h4>
+                {Object.keys(this.state.form.errors).map((key, i) =>
+                  <li key={i}>{this.state.form.errors[key]}</li>
+                )}
+              </ul>
+            </Message>
+          )}
+          <Button type='submit'>Log In</Button>
+        </Form>
+      </div>
     )
   }
 }
 
-export default postsContainer(PostIndexPage);
+export default authContainer(LoginPage);

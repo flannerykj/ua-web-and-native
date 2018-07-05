@@ -49,6 +49,8 @@ export class ApiService {
   }
 
   post(url: string, body: any): Promise<any> {
+    console.log('posting: ', body);
+    console.log('to: ', url);
     return axios({
       url: `${this.endpoint}${url}`,
       method: 'post',

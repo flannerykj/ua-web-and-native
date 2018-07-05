@@ -25,7 +25,7 @@ export default () => (
         <Route exact path='/' render={() => (
           <Redirect to='/posts' />
         )} />
-        <Route path='/posts' component={PostIndexPage} />
+        <Route exact path='/posts' component={PostIndexPage} />
         <Route exact path='/posts/:id' component={PostDetailPage} />
         <Route path='/artists' component={ArtistIndexPage} />
         <Route exact path='/artists/:id' component={ArtistDetailPage} />

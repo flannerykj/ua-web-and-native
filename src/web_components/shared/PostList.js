@@ -6,21 +6,19 @@ import { Card, Image } from 'semantic-ui-react';
 
 type Props = {
   posts: Post[],
-  history: {}
+  onPostClick: (post: Post) => void
 }
 
 const PostList = (props: Props) => {
-  console.log(props.posts);
   return (
     <div>
       {props.posts.map((post, i) => {
-        console.log(post);
         return (
           <Card
             key={i}
             style={{margin: '0 auto'}}
             fluid
-            onClick={() => props.history.push(`/posts/${post.id}`)}
+            onClick={() => props.onPostClick(post)}
           >
             <Image src={post.image} />
             <Card.Content>

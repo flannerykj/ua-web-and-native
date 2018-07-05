@@ -14,5 +14,6 @@ export type PostsContainer {
   page: ?number,
   pageSize: ?number,
   total: ?number,
-  receivedAt: ?Date
+  receivedAt: ?Date,
+  selectedPost: null
 }

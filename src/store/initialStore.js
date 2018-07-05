@@ -7,7 +7,13 @@ const initialStore = {
     page: null,
     pageSize: null,
     total: null,
-    receivedAt: null
+    receivedAt: null,
+    selectedPost: null
+  },
+  auth: {
+    loggedIn: false,
+    loading: false,
+    error: null
   }
 }
 

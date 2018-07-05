@@ -43,6 +43,7 @@ module.exports = {
   },
   output: {
     path: __dirname + '/web',
+    publicPath: '/',
     filename: 'index_bundle.js'
   },
   plugins: [
