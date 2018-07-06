@@ -31,6 +31,7 @@ class LoginPage extends Component<PostsContainer> {
     if (this.state.form.hasErrors) {
       return;
     }
+    this.props.login(this.state.form);
   }
   onFieldChange = (field, value) => {
     const form = this.state.form;
@@ -65,6 +66,7 @@ class LoginPage extends Component<PostsContainer> {
           <Form.Field error={!!(errors.password)}>
              <Form.Input
               label='Password'
+              type='password'
               placeholder='Password'
               value={this.state.form.password}
               onChange={(e) => this.onFieldChange('password', e.target.value)}
@@ -82,6 +84,13 @@ class LoginPage extends Component<PostsContainer> {
               </ul>
             </Message>
           )}
+          {this.props.auth.error && (
+            <Message
+              error
+              content={this.props.auth.error}
+            />
+          )}
+
           <Button type='submit'>Log In</Button>
         </Form>
       </div>

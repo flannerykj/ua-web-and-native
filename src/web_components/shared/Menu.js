@@ -1,10 +1,62 @@
 import React, { Component } from 'react';
 import { Button, Dropdown, Menu } from 'semantic-ui-react';
 
+type AuthMenuProps = {
+  authenticated: boolean,
+  history: {},
+  onLogoutClick: () => void
+}
+
+const AuthMenu = (props: AuthMenuProps) => {
+  if (props.authenticated) {
+    return [
+      <Menu.Item
+        onClick={() => props.history.push('/profile')}
+        key={0}
+      >
+        Profile
+      </Menu.Item>,
+
+      <Menu.Item
+        key={1}
+      >
+        <Button
+          primary
+          onClick={props.onLogoutClick}
+        >
+          Log Out
+        </Button>
+      </Menu.Item>
+    ]
+  }
+  return [
+    <Menu.Item
+      key={0}
+    >
+      <Button
+        primary
+        onClick={() => props.history.push('/signup')}
+      >
+        Sign Up
+      </Button>
+    </Menu.Item>,
+
+    <Menu.Item
+      key={1}
+    >
+      <Button
+        primary
+        onClick={() => props.history.push('/login')}
+      >
+        Log In
+      </Button>
+    </Menu.Item>
+  ]
+}
+
 export default class AppMenu extends Component {
   render() {
     const activeItem = this.props.history.location.pathname;
-    console.log(activeItem);
 
     return (
       <Menu size='large' fluid stackable style={{marginTop: '24px'}}>
@@ -12,7 +64,7 @@ export default class AppMenu extends Component {
         <Menu.Item
           name='Artists'
           active={activeItem.indexOf('artists') > -1}
-          onClick={() => this.props.push('/artists')}
+          onClick={() => this.props.history.push('/artists')}
         />
 
         <Menu.Menu position='right'>
@@ -22,14 +74,11 @@ export default class AppMenu extends Component {
               <Dropdown.Item>French</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-
-          <Menu.Item>
-            <Button primary>Sign Up</Button>
-          </Menu.Item>
-
-          <Menu.Item>
-            <Button primary>Log In</Button>
-          </Menu.Item>
+          <AuthMenu
+            authenticated={this.props.authenticated}
+            onLogoutClick={this.props.onLogout}
+            history={this.props.history}
+          />
         </Menu.Menu>
       </Menu>
     )

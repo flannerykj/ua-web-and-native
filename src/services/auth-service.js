@@ -7,19 +7,14 @@ import LoginForm from '../types/login-form';
 import RegistrationForm from '../types/registration-form';
 
 class AuthService {
-
-  login(form: LoginForm): Promise<{}> {
+  login(form: LoginForm): Promise<{token: string}> {
     return apiService.post(`/login`, {...form, username: 'flannj'})
-      .then((response) => {
-        return response;
-      })
+      .then((response) => response)
       .catch((error) => error);
   }
-  register(form: RegistrationForm): Promise<{}> {
+  register(form: RegistrationForm): Promise<{token: string}> {
     return apiService.post(`/register`, form)
-      .then((response) => {
-        return response;
-      })
+      .then((response) => response)
       .catch((error) => error);
   }
 }

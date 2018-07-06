@@ -70,6 +70,7 @@ class SignupPage extends Component<Props> {
              <Form.Input
               label='Password'
               placeholder='Password'
+              type='password'
               value={this.state.form.password}
               onChange={(e) => this.onFieldChange('password', e.target.value)}
             />
@@ -78,6 +79,7 @@ class SignupPage extends Component<Props> {
           <Form.Field error={!!(errors.password2)}>
              <Form.Input
               label='Password again'
+              type='password'
               placeholder='Your password again'
               value={this.state.form.password2}
               onChange={(e) => this.onFieldChange('password2', e.target.value)}
